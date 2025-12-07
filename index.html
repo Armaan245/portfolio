@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Artist & Designer Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Chosen Palette: Dark Mode with Purple/Violet Accent (bg-gray-900, bg-gray-800, text-white, accent-purple-600) -->
+    <!-- Application Structure Plan: Single-page application (SPA). Portfolio gallery grid updated for larger images. User flow is Home -> About -> Portfolio -> Contact. -->
+    <!-- Visualization & Content Choices: Hero background image and Profile image use assets/ folder. Gallery uses 5 selected images from assets/ folder. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+<style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827;
+            color: #f3f4f6;
+        }
+        
+        .hero-bg-image {
+            /* Background image from assets folder */
+            background-image: url('assets/Gemini_Generated_Image_ruynh0ruynh0ruyn.jpg'); 
+            background-size: cover;
+            background-position: center;
+            opacity: 0.3; 
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transition: opacity 1s ease;
+        }
+        
+        #home {
+            background-color: #0f172a; 
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .active-nav {
+            color: #a78bfa;
+            font-weight: 500;
+        }
+        .modal {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .modal.show {
+            display: flex;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100">
+
+    <header class="sticky top-0 z-50 w-full bg-gray-900/80 backdrop-blur-md shadow-lg">
+        <nav class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#home" class="text-2xl font-bold tracking-tight text-white">
+                CUBE<span class="text-purple-400">.</span>
+            </a>
+            <ul class="hidden md:flex space-x-8">
+                <li><a href="#home" class="nav-link text-gray-300 hover:text-purple-400 transition-colors duration-300">Home</a></li>
+                <li><a href="#about" class="nav-link text-gray-300 hover:text-purple-400 transition-colors duration-300">About</a></li>
+                <li><a href="#portfolio" class="nav-link text-gray-300 hover:text-purple-400 transition-colors duration-300">Portfolio</a></li>
+                <li><a href="#contact" class="nav-link text-gray-300 hover:text-purple-400 transition-colors duration-300">Contact</a></li>
+            </ul>
+            <button id="mobile-menu-button" class="md:hidden text-gray-300 text-2xl">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4 flex flex-col space-y-4">
+            <a href="#home" class="nav-link block text-gray-300 hover:text-purple-400 transition-colors duration-300">Home</a>
+            <a href="#about" class="nav-link block text-gray-300 hover:text-purple-400 transition-colors duration-300">About</a>
+            <a href="#portfolio" class="nav-link block text-gray-300 hover:text-purple-400 transition-colors duration-300">Portfolio</a>
+            <a href="#contact" class="nav-link block text-gray-300 hover:text-purple-400 transition-colors duration-300">Contact</a>
+        </div>
+    </header>
+
+    <main>
+        <section id="home" class="h-screen min-h-[600px] flex items-center justify-center text-center relative overflow-hidden px-4">
+            <div class="hero-bg-image"></div>
+            <div class="z-10">
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-black text-white drop-shadow-lg mb-4 fade-in" style="animation-delay: 0.2s;">Welcome</h1>
+                <p class="text-2xl md:text-3xl font-medium text-gray-200 drop-shadow-md mb-8 fade-in" style="animation-delay: 0.4s;">I'm <span class="text-purple-300">Armaan Mujawar</span></p>
+                <p class="text-xl md:text-2xl font-light text-gray-200 drop-shadow-md mb-10 fade-in" style="animation-delay: 0.6s;">Digital Artist & Graphic Designer</p>
+                <a href="#portfolio" class="bg-purple-600 text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg fade-in" style="animation-delay: 0.8s;">View My Work</a>
+            </div>
+        </section>
+
+        <section id="about" class="py-20 lg:py-32 fade-in">
+            <div class="max-w-6xl mx-auto px-6">
+                <h2 class="text-4xl font-bold text-center mb-16">
+                    About <span class="text-purple-400">Me</span>
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 items-center">
+                    <div class="rounded-lg overflow-hidden shadow-2xl transform transition-all duration-500 hover:scale-105 bg-gray-800 p-8">
+                        <!-- Profile image from assets folder -->
+                        <img src="assets/Profile.png" alt="Armaan Mujawar Profile Image" class="w-full h-full object-contain">
+                    </div>
+                    <div class="text-lg text-gray-300 space-y-6">
+                        <p>Hello! I'm Armaan Mujawar, a passionate digital artist and designer with a love for creating compelling visuals, especially in the gaming and concept art space. My work is driven by storytelling and a desire to bring ideas to life.</p>
+                        <p>With expertise in tools like Photoshop, Illustrator, and Procreate, I specialize in character design, environment art, and branding. I thrive on new challenges and am always looking to push my creative boundaries.</p>
+                        <p>This portfolio showcases a collection of my favorite projects. Feel free to look around and get in touch if you'd like to collaborate!</p>
+                        <a href="#contact" class="inline-block bg-transparent border-2 border-purple-400 text-purple-400 font-bold py-2 px-6 rounded-full text-base hover:bg-purple-400 hover:text-gray-900 transition-all duration-300 mt-4">Let's Talk</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PORTFOLIO SECTION WITH ONLY 5 IMAGES (LARGER SIZE) -->
+        <section id="portfolio" class="py-20 lg:py-32 bg-gray-800 fade-in">
+            <div class="max-w-7xl mx-auto px-6">
+                <h2 class="text-4xl font-bold text-center mb-16">
+                    My <span class="text-purple-400">Work</span>
+                </h2>
+                <p class="text-center text-lg text-gray-400 max-w-2xl mx-auto mb-12">Click any image to see it in full detail.</p>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 lg:gap-8 justify-items-center">
+                    
+                    <!-- 5 SELECTED IMAGES with increased height (h-72) and reduced grid columns -->
+                    <div class="gallery-item bg-gray-700 rounded-lg overflow-hidden shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl w-full">
+                        <img src="assets/Chamber1-Recovered.jpg" alt="Chamber Art" class="w-full h-72 object-cover cursor-pointer">
+                    </div>
+                    <div class="gallery-item bg-gray-700 rounded-lg overflow-hidden shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl w-full">
+                        <img src="assets/Layer10.png" alt="Layered Art Showcase" class="w-full h-72 object-cover cursor-pointer" data-main-image="assets/Layer10.png" data-sub-images="assets/BGMI%28Mere%20He%20sab%20se%20aacha%20hai%29.png,assets/layer8.png">
+                    </div>
+                    <div class="gallery-item bg-gray-700 rounded-lg overflow-hidden shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl w-full">
+                        <img src="assets/Watchtogther.png" alt="Watch Together Art" class="w-full h-72 object-cover cursor-pointer">
+                    </div>
+                    <div class="gallery-item bg-gray-700 rounded-lg overflow-hidden shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl w-full">
+                        <img src="assets/PROMPTMFinal.png" alt="PROMPTM Final Art" class="w-full h-72 object-cover cursor-pointer">
+                    </div>
+                    <div class="gallery-item bg-gray-700 rounded-lg overflow-hidden shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl w-full">
+                        <img src="assets/STU.png" alt="STU Art" class="w-full h-72 object-cover cursor-pointer">
+                    </div>
+                    <div class="gallery-item bg-gray-700 rounded-lg overflow-hidden shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl w-full">
+                        <img src="assets/COD2.png" alt="COD2" class="w-full h-72 object-cover cursor-pointer">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="py-20 lg:py-32 fade-in">
+            <div class="max-w-3xl mx-auto px-6 text-center">
+                <h2 class="text-4xl font-bold text-center mb-6">
+                    Get In <span class="text-purple-400">Touch</span>
+                </h2>
+                <p class="text-lg text-gray-400 mb-12">I'm currently available for freelance work and new opportunities. Drop me a line!</p>
+                <form id="contactForm" action="https://formspree.io/f/xkgyeowa" method="POST" class="space-y-6">
+                    <div>
+                        <input type="text" name="name" id="name" placeholder="Your Name" class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all" required>
+                    </div>
+                    <div>
+                        <input type="email" name="email" id="email" placeholder="Your Email" class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all" required>
+                    </div>
+                    <div>
+                        <textarea name="message" id="message" rows="5" placeholder="Your Message" class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all" required></textarea>
+                    </div>
+                    
+                    <div>
+                        <button type="submit" class="w-full bg-purple-600 text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg">Send Message</button>
+                    </div>
+                </form>
+
+                <div class="mt-16">
+                    <p class="text-gray-400 mb-4">Or find me on social media:</p>
+                    <div class="flex justify-center space-x-6">
+                        <a href="https://x.com/Araman245" class="text-gray-400 hover:text-purple-400 transition-colors duration-300 text-3xl">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <!-- <a href="#" class="text-gray-400 hover:text-purple-400 transition-colors duration-300 text-3xl">
+                            <i class="fab fa-instagram"></i>
+                        </a> -->
+                        <a href="https://www.linkedin.com/in/armaan-mujawar-8a33362b9/" class="text-gray-400 hover:text-purple-400 transition-colors duration-300 text-3xl">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <!-- <a href="#" class="text-gray-400 hover:text-purple-400 transition-colors duration-300 text-3xl">
+                            <i class="fab fa-artstation"></i>
+                        </a> -->
+                         <a href="https://discordapp.com/users/923904253548978206" class="text-gray-400 hover:text-purple-400 transition-colors duration-300 text-3xl">
+                            <i class="fab fa-discord"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="py-8 bg-gray-800 border-t border-gray-700">
+        <div class="max-w-7xl mx-auto px-6 text-center text-gray-500">
+            <p>&copy; 2024 Armaan Mujawar. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Modal for viewing full size images -->
+    <div id="imageModal" class="modal fixed inset-0 bg-black/90 z-[100] items-center justify-center p-4">
+        <button id="closeModal" class="absolute top-6 right-6 text-white text-4xl font-bold hover:text-purple-400 transition-colors duration-300">&times;</button>
+        <div class="flex flex-col lg:flex-row items-center justify-center max-w-6xl w-full h-full gap-4">
+            <!-- Main Image Container -->
+            <div class="flex flex-col items-center justify-center flex-grow w-full lg:w-3/5">
+                <img id="modalImage" src="" alt="Full-size portfolio image" class="max-w-full max-h-[60vh] lg:max-h-[80vh] rounded-lg shadow-2xl object-contain mb-4 lg:mb-0">
+            </div>
+            <!-- Details / Sub-Images Container -->
+            <div id="imageDetails" class="hidden flex-shrink-0 w-full lg:w-2/5 p-4 bg-gray-800 rounded-lg shadow-xl overflow-y-auto max-h-[30vh] lg:max-h-[80vh] text-gray-300">
+                <h3 class="text-2xl font-bold text-purple-400 mb-4" id="detailTitle">Image Details</h3>
+                <p class="mb-4" id="detailDescription">This is a detailed description of the artwork, providing context, techniques used, and creative process.</p>
+                <div id="subImagesContainer" class="grid grid-cols-2 gap-4">
+                    <!-- Sub-images are dynamically injected here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- Modal and Gallery Logic ---
+            const modal = document.getElementById('imageModal');
+            const modalImage = document.getElementById('modalImage');
+            const closeModal = document.getElementById('closeModal');
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            const imageDetails = document.getElementById('imageDetails');
+            const detailTitle = document.getElementById('detailTitle');
+            const detailDescription = document.getElementById('detailDescription');
+            const subImagesContainer = document.getElementById('subImagesContainer');
+            
+            const showModal = (src, alt, mainImageSrc, subImageUrls) => {
+                modalImage.src = src;
+                modalImage.alt = alt;
+                
+                // Reset details view
+                imageDetails.classList.add('hidden');
+                subImagesContainer.innerHTML = ''; // Clear previous sub-images
+
+                if (mainImageSrc && subImageUrls) {
+                    imageDetails.classList.remove('hidden');
+                    detailTitle.textContent = alt || "Artwork Details";
+                    detailDescription.innerHTML = `
+                        This artwork, "${alt}", is a prime example of my layered digital painting techniques. It combines intricate details with dynamic composition to create a visually rich experience.
+                        <br><br>
+                        Below you can see some related concepts or detail shots.
+                    `;
+
+                    subImageUrls.split(',').forEach(subUrl => {
+                        const imgElement = document.createElement('img');
+                        imgElement.src = subUrl.trim();
+                        imgElement.alt = "Related Detail";
+                        imgElement.classList.add('w-full', 'h-auto', 'object-contain', 'rounded-lg', 'shadow-md', 'cursor-pointer');
+                        imgElement.addEventListener('click', () => showModal(imgElement.src, imgElement.alt)); // Allow clicking sub-images to view them large
+                        subImagesContainer.appendChild(imgElement);
+                    });
+                }
+                modal.classList.add('show');
+            }
+
+            const hideModal = () => {
+                modal.classList.remove('show');
+                imageDetails.classList.add('hidden'); // Ensure details are hidden on close
+            }
+
+            galleryItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const img = item.querySelector('img');
+                    const mainImageSrc = img.dataset.mainImage;
+                    const subImageUrls = img.dataset.subImages;
+
+                    showModal(img.src, img.alt, mainImageSrc, subImageUrls);
+                });
+            });
+
+            closeModal.addEventListener('click', hideModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    hideModal();
+                }
+            });
+
+            // --- Standard UI/Navigation Logic ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            document.querySelectorAll('#mobile-menu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+
+            const fadeInElements = document.querySelectorAll('.fade-in');
+            const fadeObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        fadeObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            fadeInElements.forEach(el => {
+                fadeObserver.observe(el);
+            });
+            
+            if (fadeInElements.length > 0) {
+                 fadeInElements[0].classList.add('visible');
+            }
+
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            const navObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+                        const id = entry.target.getAttribute('id');
+                        navLinks.forEach(link => {
+                            link.classList.remove('active-nav');
+                            if (link.getAttribute('href') === `#${id}`) {
+                                link.classList.add('active-nav');
+                            }
+                        });
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            sections.forEach(section => {
+                navObserver.observe(section);
+            });
+        });
+    </script>
+
+</body>
+</html>
