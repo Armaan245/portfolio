@@ -2693,7 +2693,20 @@
   }
 
   Promise.all([
-    new Promise(r => { if (sheet.complete) r(); else sheet.onload = r; }),
+    new Promise(r => {
+      if (sheet.complete && sheet.naturalWidth > 0) return r();
+      sheet.onload = () => r();
+      sheet.onerror = () => {
+        if (!sheet.src.startsWith('/') && !sheet.src.includes('://')) {
+          sheet.src = '/' + sheet.src;
+          sheet.onload = () => r();
+          sheet.onerror = () => r();
+        } else {
+          r();
+        }
+      };
+      setTimeout(r, 2500); // safety fallback so canvas never hangs
+    }),
     document.fonts ? Promise.race([document.fonts.load(`16px ${PIXEL_FONT}`), new Promise(r => setTimeout(r, 1500))]) : null,
   ]).then(() => {
     resize();
