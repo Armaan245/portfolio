@@ -1,65 +1,74 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Armaan | Home</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Syne:wght@800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css"> 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Armaan Mujawar | Digital Artist & Creative Developer</title>
+  <meta name="description" content="Interactive 2D pixel-art studio portfolio of Armaan Mujawar. Walk around, explore 3D branding, esports keyart, and live GitHub terminals.">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png">
+  <meta name="theme-color" content="#161b2e">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;600&family=Silkscreen&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+  <canvas id="game" tabindex="0" aria-label="Pixel studio — walk with WASD or arrow keys, press E to interact"></canvas>
 
-    <nav class="navbar">
-        <div class="logo">ARMAAN.</div>
-        <div class="nav-links">
-            <a href="index.html">HOME</a>
-            <a href="work.html" class="nav-highlight">VIEW WORK →</a>
-        </div>
-    </nav>
-
-    <header class="hero">
-        <h1 class="hero-title">DIGITAL<br><span class="outline">ARTIST</span></h1>
-        <p class="hero-subtext">Graphic Designer & Developer in Training</p>
-        <div class="scroll-indicator">SCROLL_DOWN ↓</div>
-    </header>
-
-    <section id="about" class="about-section">
-        <div class="about-container">
-            <div class="about-text">
-                <h2 class="section-label">ABOUT_ME</h2>
-                <p>Hello! I'm Armaan Mujawar, a passionate digital artist and designer. I thrive on new challenges and am always looking to push my creative boundaries.</p>
-                <a href="work.html" class="btn-main">SEE MY DESIGNS</a>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" class="contact-section">
-    <div class="contact-card">
-        <h2 class="section-label">GET_IN_TOUCH</h2>
-        <p class="contact-desc">I'm currently available for freelance work. Drop me a line!</p>
-        
-        <form action="#" class="bold-form">
-            <div class="input-group">
-                <input type="text" placeholder="YOUR NAME" required>
-                <input type="email" placeholder="YOUR EMAIL" required>
-            </div>
-            <textarea placeholder="TELL ME ABOUT YOUR PROJECT" rows="5"></textarea>
-            <button type="submit" class="btn-send">SEND MESSAGE</button>
-        </form>
-
-        <div class="social-links">
-            <a href="https://x.com/Araman245">TWITTER</a>
-            <a href="https://www.linkedin.com/in/armaan-mujawar-8a33362b9/">LINKEDIN</a>
-            <a href="https://discordapp.com/users/923904253548978206">DISCORD</a>
-        </div>
+  <!-- HUD -->
+  <div id="hud">
+    <div class="who">
+      <div class="avatar"></div>
+      <div class="who-text">
+        <b id="profile-name">Armaan Mujawar</b>
+        <small id="profile-role">Digital Artist · Creative Developer</small>
+        <div class="progress-row"><div class="progress"><div id="progress-bar"></div></div><small id="progress-text" class="progress-text"></small></div>
+      </div>
     </div>
-</section>
-<footer class="mini-footer">
-    <p>© 2025 ARMAAN MUJAWAR | DESIGNER • DEVELOPER • ARTIST</p>
-</footer>
+    <div class="buttons">
+      <button class="pixel-btn" id="btn-menu" title="Quick menu (skip the walking)">☰ <span>Menu</span></button>
+      <button class="pixel-btn icon" id="btn-night" title="Night mode (N)">☾</button>
+      <button class="pixel-btn icon" id="btn-music" title="Music (M)">♪</button>
+      <button class="pixel-btn icon on" id="btn-sound" title="Sound effects">🔊</button>
+    </div>
+    <!-- on-screen controls: click/hold or touch; they also light up when the keyboard is used -->
+    <div id="pad" aria-label="Movement controls">
+      <div class="dpad">
+        <button class="up" data-key="w" aria-label="Walk up (W / ↑)"><span>▲</span><kbd>W</kbd></button>
+        <button class="left" data-key="a" aria-label="Walk left (A / ←)"><span>◀</span><kbd>A</kbd></button>
+        <button class="down" data-key="s" aria-label="Walk down (S / ↓)"><span>▼</span><kbd>S</kbd></button>
+        <button class="right" data-key="d" aria-label="Walk right (D / →)"><span>▶</span><kbd>D</kbd></button>
+      </div>
+      <div class="actions">
+        <button class="act" id="pad-e" data-key="e" aria-label="Interact (E)">E<small>use</small></button>
+        <button class="run" data-key="shift" aria-label="Hold to run (Shift)">⇧<small>run</small></button>
+      </div>
+    </div>
+  </div>
 
+  <!-- quick menu -->
+  <div id="menu" class="modal" hidden>
+    <div class="sheet">
+      <header><span class="icon">☰</span><div><h2>Quick menu</h2><small>In a hurry? Pick a spot and I'll walk there.</small></div><button class="close" aria-label="Close">✕</button></header>
+      <div class="menu-list"></div>
+    </div>
+  </div>
+
+  <!-- content panel -->
+  <div id="panel" class="modal" hidden>
+    <div class="sheet" role="dialog" aria-modal="true">
+      <button class="close" aria-label="Close">✕</button>
+      <div id="panel-body"></div>
+    </div>
+  </div>
+
+  <div id="toasts"></div>
+
+  <script src="assets/sprites.js"></script>
+  <script src="js/content.js"></script>
+  <script src="js/world.js"></script>
+  <script src="js/game.js"></script>
 </body>
 </html>

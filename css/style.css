@@ -1,0 +1,211 @@
+:root {
+  --ink: #fff6dc;
+  --muted: #b9b2c8;
+  --night: #161b2e;
+  --panel: #1b2238;
+  --panel-2: #232c47;
+  --wood: #8b5a2b;
+  --wood-dark: #4a2d16;
+  --gold: #ffd36a;
+  --green: #5ee08a;
+  --pink: #ff5d7a;
+  --font-head: 'Silkscreen', 'Pixelify Sans', monospace;
+  --font-body: 'VT323', 'Pixelify Sans', monospace;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; overflow: hidden; background: var(--night); color: var(--ink); font-family: var(--font-body); }
+canvas#game { display: block; outline: none; image-rendering: pixelated; touch-action: none; }
+/* pizza-slice cursor (tip = hotspot); a bitten slice over anything clickable */
+html, body, canvas#game { cursor: url('../assets/cursor/pizza.png') 2 2, auto; }
+canvas#game.hovering, a, .links a, .menu-list button { cursor: url('../assets/cursor/pizza-bite.png') 2 2, pointer; }
+button { font: inherit; color: inherit; }
+kbd { font-family: var(--font-head); font-size: 11px; background: #2c3555; border: 2px solid #4b5680; border-bottom-width: 4px; border-radius: 4px; padding: 1px 6px; color: var(--ink); }
+
+/* pixel button */
+.pixel-btn {
+  font-family: var(--font-head); font-size: 13px; letter-spacing: .5px;
+  background: var(--panel-2); color: var(--ink); cursor: url('../assets/cursor/pizza-bite.png') 2 2, pointer;
+  border: 3px solid #0d1120; border-radius: 6px; padding: 8px 12px;
+  box-shadow: inset 0 -4px 0 rgba(0,0,0,.35), inset 0 2px 0 rgba(255,255,255,.08), 0 3px 0 #0d1120;
+  transition: transform .08s, background .15s;
+}
+.pixel-btn:hover { background: #2e3a5e; }
+.pixel-btn:active { transform: translateY(2px); box-shadow: inset 0 -2px 0 rgba(0,0,0,.35), 0 1px 0 #0d1120; }
+.pixel-btn.icon { width: 42px; padding: 8px 0; }
+.pixel-btn.on { background: #3a3a1f; color: var(--gold); }
+.pixel-btn:focus-visible, .menu-list button:focus-visible, .links a:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+
+/* HUD */
+#hud { position: fixed; inset: 0; pointer-events: none; opacity: 0; transition: opacity .6s .4s; z-index: 5; }
+#hud.show { opacity: 1; }
+#hud > * { pointer-events: auto; }
+.who {
+  position: absolute; top: 10px; left: 12px; display: flex; gap: 10px; align-items: center;
+  background: rgba(27,34,56,.92); border: 3px solid #0d1120; border-radius: 8px; padding: 8px 12px 8px 8px;
+  box-shadow: 0 3px 0 #0d1120; max-width: calc(100vw - 24px);
+}
+.avatar { width: 40px; height: 46px; border-radius: 6px; background: #2c3555 url('../assets/sprites.png') no-repeat; image-rendering: pixelated; flex: none; }
+.who b { font-family: var(--font-head); font-size: 14px; display: block; color: var(--gold); }
+.who small { font-size: 17px; color: var(--muted); display: block; line-height: 1; margin-top: 2px; }
+.progress-row { display: flex; align-items: center; gap: 8px; margin-top: 4px; }
+.progress { height: 8px; width: 120px; background: #0d1120; border-radius: 4px; overflow: hidden; flex: none; }
+#progress-bar { height: 100%; width: 0; background: linear-gradient(90deg, var(--green), var(--gold)); transition: width .5s; }
+.progress-text { font-size: 15px !important; margin: 0 !important; }
+.buttons { position: absolute; top: 14px; right: 12px; display: flex; gap: 8px; }
+#hint {
+  position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%); white-space: nowrap;
+  background: rgba(13,17,32,.85); padding: 6px 14px; border-radius: 20px; font-size: 19px; color: var(--muted);
+  transition: opacity 1s; max-width: calc(100vw - 24px); overflow: hidden; text-overflow: ellipsis;
+}
+#hint.fade { opacity: 0; }
+
+/* on-screen control pad (hidden for clean visual presentation) */
+#pad { display: none !important; }
+#pad button {
+  width: 52px; height: 52px; display: grid; place-items: center; align-content: center; gap: 1px; padding: 0; cursor: url('../assets/cursor/pizza-bite.png') 2 2, pointer;
+  background: rgba(35,44,71,.88); color: var(--ink); border: 3px solid #0d1120; border-radius: 8px;
+  box-shadow: inset 0 -4px 0 rgba(0,0,0,.35), inset 0 2px 0 rgba(255,255,255,.08), 0 3px 0 #0d1120;
+  font-family: var(--font-head); font-size: 16px; line-height: 1; transition: transform .06s, background .1s;
+  -webkit-tap-highlight-color: transparent;
+}
+#pad button span { font-size: 15px; color: var(--gold); }
+#pad button kbd, #pad button small { font-family: var(--font-head); font-size: 10px; background: none; border: 0; padding: 0; color: var(--muted); }
+#pad button:hover { background: rgba(46,58,94,.95); }
+#pad button.pressed { transform: translateY(2px); background: #3a3a1f; box-shadow: inset 0 -2px 0 rgba(0,0,0,.35), 0 1px 0 #0d1120; }
+#pad button.pressed span, #pad button.pressed kbd { color: var(--ink); }
+.dpad { display: grid; grid-template-columns: repeat(3, 52px); grid-template-rows: repeat(2, 52px); gap: 4px; }
+.dpad .up { grid-column: 2; grid-row: 1; }
+.dpad .left { grid-column: 1; grid-row: 2; }
+.dpad .down { grid-column: 2; grid-row: 2; }
+.dpad .right { grid-column: 3; grid-row: 2; }
+#pad .actions { display: flex; flex-direction: column; gap: 4px; }
+#pad .act { background: rgba(184,86,43,.92); color: #fff6dc; }
+#pad .act:hover { background: #cf6533; }
+
+/* modals */
+.modal { position: fixed; inset: 0; z-index: 10; display: grid; place-items: center; padding: 16px; background: rgba(10,12,24,.45); }
+.modal[hidden] { display: none; }
+.sheet {
+  position: relative; width: min(560px, 100%); max-height: min(80vh, 720px); overflow: auto;
+  background: var(--panel); border: 4px solid #0d1120; border-radius: 10px;
+  box-shadow: 0 0 0 4px var(--wood), 0 0 0 8px #0d1120, 0 24px 60px rgba(0,0,0,.55);
+  transform: translateY(14px) scale(.97); opacity: 0; transition: transform .18s, opacity .18s;
+}
+#panel.open .sheet, #menu:not([hidden]) .sheet { transform: none; opacity: 1; }
+.sheet header { display: flex; gap: 12px; align-items: center; padding: 16px 52px 14px 18px; background: var(--panel-2); border-bottom: 3px solid #0d1120; position: sticky; top: 0; z-index: 1; }
+.sheet header .icon { font-size: 26px; width: 44px; height: 44px; display: grid; place-items: center; background: #0d1120; border-radius: 6px; color: var(--gold); flex: none; }
+.sheet h2 { font-family: var(--font-head); font-size: 20px; margin: 0; color: var(--gold); font-weight: 400; }
+.sheet header small { font-size: 19px; color: var(--green); }
+.close { position: absolute; top: 14px; right: 14px; z-index: 2; width: 34px; height: 34px; border-radius: 6px; border: 3px solid #0d1120; background: #b8432b; cursor: url('../assets/cursor/pizza-bite.png') 2 2, pointer; font-family: var(--font-head); font-size: 14px; box-shadow: inset 0 -3px 0 rgba(0,0,0,.3); }
+.close:hover { background: #d0533a; }
+.content { padding: 6px 20px 20px; font-size: 21px; line-height: 1.2; }
+.content h3 { font-family: var(--font-head); font-size: 13px; color: var(--muted); text-transform: uppercase; margin: 18px 0 8px; font-weight: 400; }
+.content p { margin: 12px 0; }
+.content .note { color: var(--muted); }
+.list { margin: 8px 0; padding: 0; list-style: none; }
+.list li { padding: 6px 0 6px 18px; position: relative; border-bottom: 1px dashed #333d60; }
+.list li::before { content: '▸'; position: absolute; left: 0; color: var(--gold); }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tags span { background: #0d1120; border: 2px solid #3a4670; padding: 2px 10px; border-radius: 4px; font-size: 19px; }
+.links { display: grid; gap: 8px; margin-top: 12px; }
+.links a { display: flex; align-items: baseline; gap: 10px; text-decoration: none; color: var(--ink); background: #0d1120; border: 2px solid #3a4670; border-radius: 6px; padding: 8px 12px; transition: border-color .15s, transform .1s; }
+.links a:hover { border-color: var(--gold); transform: translateX(3px); }
+.links b { font-weight: 400; color: var(--gold); }
+.links small { color: var(--muted); font-size: 18px; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px; }
+.stats div { background: #0d1120; border: 2px solid #3a4670; border-radius: 6px; padding: 10px; text-align: center; }
+.stats b { display: block; font-family: var(--font-head); font-size: 20px; color: var(--green); font-weight: 400; }
+.stats small { color: var(--muted); font-size: 18px; }
+.timeline { list-style: none; padding: 0; margin: 12px 0 0; border-left: 3px solid #3a4670; }
+.timeline li { padding: 0 0 16px 16px; position: relative; }
+.timeline li::before { content: ''; position: absolute; left: -8px; top: 4px; width: 10px; height: 10px; background: var(--gold); border: 2px solid #0d1120; }
+.timeline small { color: var(--green); font-size: 18px; display: block; }
+.timeline b { font-weight: 400; color: var(--gold); }
+.timeline p { margin: 2px 0 0; color: var(--muted); }
+.contrib { display: grid; grid-template-rows: repeat(7, 1fr); grid-auto-flow: column; gap: 3px; margin-top: 14px; }
+.contrib i { aspect-ratio: 1; border-radius: 2px; background: #0d1120; }
+.contrib .l1 { background: #0e4429; } .contrib .l2 { background: #006d32; } .contrib .l3 { background: #26a641; } .contrib .l4 { background: #39d353; }
+.stats.four { grid-template-columns: repeat(4, 1fr); }
+.contrib-total { margin: 14px 0 6px !important; color: var(--muted); }
+.contrib-total b { color: var(--green); font-weight: 400; }
+.contrib-scroll { overflow-x: auto; padding-bottom: 4px; }
+.contrib.year { grid-template-rows: repeat(7, 7px); grid-auto-columns: 7px; gap: 2px; width: max-content; margin: 0 auto; }
+.contrib.year i { aspect-ratio: auto; }
+.contrib .pad { background: transparent; }
+.contrib i[data-count] { cursor: url('../assets/cursor/pizza-bite.png') 2 2, pointer; }
+.contrib i.active { outline: 2px solid var(--gold); outline-offset: 1px; position: relative; z-index: 1; }
+.contrib-tip {
+  position: fixed; z-index: 30; pointer-events: none; white-space: nowrap;
+  display: grid; gap: 0; padding: 5px 10px; border-radius: 6px;
+  background: #0d1120; border: 3px solid #0d1120; box-shadow: 0 0 0 2px var(--gold), 0 6px 16px rgba(0,0,0,.5);
+  font-family: var(--font-body); line-height: 1.05;
+}
+.contrib-tip[hidden] { display: none; }
+.contrib-tip b { font-family: var(--font-head); font-size: 12px; font-weight: 400; color: var(--green); }
+.contrib-tip small { font-size: 17px; color: var(--muted); }
+.contrib-legend { display: flex; align-items: center; gap: 3px; justify-content: flex-end; font-size: 16px; color: var(--muted); margin-top: 6px; }
+.contrib-legend i { width: 10px; height: 10px; border-radius: 2px; background: #0d1120; }
+.contrib-legend .l1 { background: #0e4429; } .contrib-legend .l2 { background: #006d32; } .contrib-legend .l3 { background: #26a641; } .contrib-legend .l4 { background: #39d353; }
+.clock { background: #0d1120; border: 2px solid #3a4670; border-radius: 6px; padding: 14px; text-align: center; margin-top: 12px; }
+.clock small { color: var(--muted); display: block; }
+.clock b { font-family: var(--font-head); font-size: 32px; color: var(--green); font-weight: 400; }
+.music-toggle { margin-top: 14px; width: 100%; }
+
+/* Spotify card in the record player panel */
+.spotify-card { display: flex; gap: 14px; align-items: center; margin-top: 10px; padding: 12px; background: #0d1120; border: 2px solid #3a4670; border-left: 6px solid #1ed760; border-radius: 6px; }
+.spotify-card.empty { display: block; }
+.spotify-card img { width: 72px; height: 72px; border-radius: 4px; flex: none; image-rendering: auto; box-shadow: 0 0 0 2px #0d1120; }
+.spotify-card div { display: grid; gap: 2px; min-width: 0; }
+.spotify-card small { font-size: 16px; color: var(--muted); }
+.spotify-card .live { color: #1ed760; }
+.spotify-card b { font-weight: 400; color: var(--ink); font-size: 22px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.spotify-card span { color: var(--muted); font-size: 18px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.spotify-card a { color: #1ed760; font-size: 17px; text-decoration: none; margin-top: 4px; }
+.spotify-card a:hover { text-decoration: underline; }
+
+/* media blocks: images, videos, galleries (photos / phone screens / motion), testimonial quotes */
+.media { margin: 12px 0; background: #0d1120; border: 3px solid #0d1120; border-radius: 6px; box-shadow: 0 0 0 2px #3a4670; overflow: hidden; }
+.media img, .media video { display: block; width: 100%; height: auto; }
+.media img { aspect-ratio: 4 / 3; object-fit: cover; object-position: 50% 70%; }
+.media figcaption, .gallery figcaption { font-size: 17px; color: var(--muted); padding: 6px 10px; }
+.gallery { display: flex; gap: 10px; overflow-x: auto; padding: 4px 2px 10px; margin-top: 8px; scroll-snap-type: x mandatory; }
+.gallery figure { flex: none; width: 70%; margin: 0; background: #0d1120; border: 3px solid #0d1120; border-radius: 6px; box-shadow: 0 0 0 2px #3a4670; overflow: hidden; scroll-snap-align: start; }
+.gallery img, .gallery video { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; }
+.gallery.tall figure { width: 38%; }
+.gallery.tall img { aspect-ratio: 627 / 1361; object-fit: cover; }
+.gallery::-webkit-scrollbar { height: 8px; }
+.gallery::-webkit-scrollbar-thumb { background: #3a4670; border-radius: 4px; }
+.quotes { display: grid; gap: 10px; margin-top: 12px; }
+.quotes blockquote { margin: 0; background: #0d1120; border: 2px solid #3a4670; border-left: 6px solid var(--gold); border-radius: 6px; padding: 10px 14px; }
+.quotes p { margin: 0 0 8px; }
+.quotes footer { font-size: 18px; color: var(--muted); }
+.quotes b { font-weight: 400; color: var(--gold); }
+
+.menu-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; padding: 16px; }
+.menu-list button { display: flex; gap: 8px; align-items: center; text-align: left; background: #0d1120; border: 2px solid #3a4670; border-radius: 6px; padding: 10px; cursor: url('../assets/cursor/pizza-bite.png') 2 2, pointer; font-size: 20px; }
+.menu-list button span { color: var(--gold); width: 22px; text-align: center; }
+.menu-list button:hover { border-color: var(--gold); }
+.menu-list button.done { border-color: #2c6e45; }
+.menu-list button.done::after { content: '✓'; margin-left: auto; color: var(--green); }
+
+/* toasts */
+#toasts { position: fixed; bottom: 56px; left: 50%; transform: translateX(-50%); display: grid; gap: 6px; justify-items: center; z-index: 15; pointer-events: none; width: max-content; max-width: calc(100vw - 32px); }
+.toast { background: var(--panel); border: 3px solid #0d1120; box-shadow: 0 0 0 2px var(--wood); padding: 6px 14px; border-radius: 6px; font-size: 20px; animation: toastIn .25s; transition: opacity .4s, transform .4s; }
+.toast.out { opacity: 0; transform: translateY(8px); }
+@keyframes toastIn { from { opacity: 0; transform: translateY(10px); } }
+
+@media (max-width: 640px) {
+  .who { padding: 6px 10px 6px 6px; }
+  .avatar { width: 34px; height: 40px; }
+  .progress { width: 120px; }
+  .buttons { top: auto; bottom: 16px; right: 12px; flex-direction: column; }
+  #btn-menu span { display: none; }
+  #hint { bottom: 136px; font-size: 16px; }
+  #pad button { width: 46px; height: 46px; }
+  .dpad { grid-template-columns: repeat(3, 46px); grid-template-rows: repeat(2, 46px); }
+  #toasts { bottom: 110px; }
+  .stats { grid-template-columns: 1fr 1fr 1fr; }
+  .stats b { font-size: 15px; }
+  .stats.four { grid-template-columns: 1fr 1fr; }
+}
