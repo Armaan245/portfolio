@@ -2,7 +2,7 @@
 
 An interactive, gamified 2D pixel art developer & digital artist portfolio rendered on an HTML5 Canvas. Explore an authentic Japanese-inspired studio apartment, interact with workstations, listen to lofi beats, inspect design projects, and pet the studio cat.
 
-![Pixel Studio Preview](assets/media/Profile.png)
+
 
 ---
 
