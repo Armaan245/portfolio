@@ -7,6 +7,8 @@
   const ctx = cvs.getContext('2d');
   const sheet = new Image();
   sheet.src = 'assets/sprites.png';
+  const spidermanSheet = new Image();
+  spidermanSheet.src = 'assets/spiderman_highres.png';
 
   const PIXEL_FONT = '"Pixelify Sans", "Silkscreen", monospace';
   const HERO_SCALE = 0.68;
@@ -1976,22 +1978,29 @@
     ctx.restore();
   }
 
-  // ── player animation ─────────────────────────────────────────────────────
+  // ── player animation (Spider-Man High-Res) ──────────────────────────────────
   function heroFrame() {
-    // the hero only stands or walks; running just plays the walk cycle faster
     const d = player.dir;
+    if (state.celebrated || player.action === 'celebrate') return 'hero_celebrate';
     if (player.mode === 'idle') return `hero_idle_${d}`;
     const fps = player.mode === 'run' ? 12 : 8;
     return `hero_walk_${d}_${1 + Math.floor(player.animT * fps) % 4}`;
   }
   function drawPlayer() {
-    const name = heroFrame(), s = S[name];
+    const name = heroFrame(), s = S[name] || S.hero_idle_down;
     const sc = HERO_SCALE;
-    // shadow
+
+    // Shadow under feet
     ctx.fillStyle = 'rgba(30,15,5,0.28)';
-    ctx.beginPath(); ctx.ellipse(player.x, player.y - 2, 22, 7, 0, 0, 7); ctx.fill();
+    ctx.beginPath();
+    ctx.ellipse(player.x, player.y - 2, 22, 7, 0, 0, Math.PI * 2);
+    ctx.fill();
+
     const bob = player.mode === 'idle' && Math.sin(state.t * 2.4) > 0.6 ? 1 : 0;
-    drawSprite(ctx, name, Math.round(player.x - s.ax * sc), Math.round(player.y - s.ay * sc + bob), sc);
+    const dx = Math.round(player.x - s.ax * sc);
+    const dy = Math.round(player.y - s.ay * sc + bob);
+
+    ctx.drawImage(spidermanSheet, s.x, s.y, s.w, s.h, dx, dy, s.w * sc, s.h * sc);
   }
   function say(text, dur = 3.5) { player.bubble = text; player.bubbleT = dur; }
 
@@ -2081,7 +2090,7 @@
     ctx.font = `15px ${PIXEL_FONT}`;
     const text = player.bubble, tw = ctx.measureText(text).width;
     const w = tw + 20, h = 28;
-    const head = 126 * HERO_SCALE / 0.9;
+    const head = 92;
     let x = clamp(player.x - w / 2, 8, W - w - 8), y = player.y - head - h - 6;
     ctx.globalAlpha = Math.min(1, player.bubbleT * 3);
     ctx.fillStyle = '#2a1b10'; roundRect(ctx, x - 2, y - 2, w + 4, h + 4, 6); ctx.fill();
@@ -2728,6 +2737,20 @@
       };
       setTimeout(r, 2500); // safety fallback so canvas never hangs
     }),
+    new Promise(r => {
+      if (spidermanSheet.complete) return r();
+      spidermanSheet.onload = () => r();
+      spidermanSheet.onerror = () => {
+        if (!spidermanSheet.src.startsWith('/') && !spidermanSheet.src.includes('://')) {
+          spidermanSheet.src = '/' + spidermanSheet.src;
+          spidermanSheet.onload = () => r();
+          spidermanSheet.onerror = () => r();
+        } else {
+          r();
+        }
+      };
+      setTimeout(r, 2500);
+    }),
     document.fonts ? Promise.race([document.fonts.load(`16px ${PIXEL_FONT}`), new Promise(r => setTimeout(r, 1500))]) : null,
   ]).then(() => {
     resize();
@@ -2737,9 +2760,13 @@
     updateProgress();
     document.getElementById('profile-name').textContent = CONTENT.profile.name;
     document.getElementById('profile-role').textContent = CONTENT.profile.role;
-    const av = document.querySelector('.avatar'), hs = S.hero_idle_down, k = 40 / hs.w;
-    av.style.backgroundSize = `${2048 * k}px auto`;
-    av.style.backgroundPosition = `${-hs.x * k + 2}px ${-hs.y * k + 4}px`;
+    const av = document.querySelector('.avatar');
+    if (av) {
+      av.style.backgroundImage = 'url("assets/spiderman_avatar.png")';
+      av.style.backgroundSize = 'contain';
+      av.style.backgroundPosition = 'center';
+      av.style.backgroundRepeat = 'no-repeat';
+    }
     const hint = document.getElementById('hint');
     if (hint && isTouch) hint.textContent = 'Tap the floor to walk · tap objects to interact';
     updateCamera(0);

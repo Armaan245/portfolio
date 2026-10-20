@@ -1,19 +1,24 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Armaan Mujawar | Digital Artist & Creative Developer</title>
-  <meta name="description" content="Interactive 2D pixel-art studio portfolio of Armaan Mujawar. Walk around, explore brand design, esports keyart, and live GitHub terminals.">
+  <title>Araman Mujawar</title>
+  <meta name="description"
+    content="Interactive 2D pixel-art studio portfolio of Araman Mujawar. Walk around, explore brand design, esports keyart, and live GitHub terminals.">
   <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32.png">
   <link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png">
   <meta name="theme-color" content="#161b2e">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;600&family=Silkscreen&family=VT323&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;600&family=Silkscreen&family=VT323&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
   <canvas id="game" tabindex="0" aria-label="Pixel studio — walk with WASD or arrow keys, press E to interact"></canvas>
 
@@ -22,9 +27,13 @@
     <div class="who">
       <div class="avatar"></div>
       <div class="who-text">
-        <b id="profile-name">Armaan Mujawar</b>
+        <b id="profile-name">Araman Mujawar</b>
         <small id="profile-role">Digital Artist · Creative Developer</small>
-        <div class="progress-row"><div class="progress"><div id="progress-bar"></div></div><small id="progress-text" class="progress-text"></small></div>
+        <div class="progress-row">
+          <div class="progress">
+            <div id="progress-bar"></div>
+          </div><small id="progress-text" class="progress-text"></small>
+        </div>
       </div>
     </div>
     <div class="buttons">
@@ -51,7 +60,11 @@
   <!-- quick menu -->
   <div id="menu" class="modal" hidden>
     <div class="sheet">
-      <header><span class="icon">☰</span><div><h2>Quick menu</h2><small>In a hurry? Pick a spot and I'll walk there.</small></div><button class="close" aria-label="Close">✕</button></header>
+      <header><span class="icon">☰</span>
+        <div>
+          <h2>Quick menu</h2><small>In a hurry? Pick a spot and I'll walk there.</small>
+        </div><button class="close" aria-label="Close">✕</button>
+      </header>
       <div class="menu-list"></div>
     </div>
   </div>
@@ -68,4 +81,5 @@
 
   <script type="module" src="/js/main.js"></script>
 </body>
+
 </html>

@@ -45,7 +45,7 @@ kbd { font-family: var(--font-head); font-size: 11px; background: #2c3555; borde
   background: rgba(27,34,56,.92); border: 3px solid #0d1120; border-radius: 8px; padding: 8px 12px 8px 8px;
   box-shadow: 0 3px 0 #0d1120; max-width: calc(100vw - 24px);
 }
-.avatar { width: 40px; height: 46px; border-radius: 6px; background: #2c3555 url('../assets/sprites.png') no-repeat; image-rendering: pixelated; flex: none; }
+.avatar { width: 42px; height: 42px; border-radius: 6px; background: #0d1120 url('../assets/spiderman_avatar.png') center/contain no-repeat; border: 2px solid #3a4670; image-rendering: pixelated; flex: none; }
 .who b { font-family: var(--font-head); font-size: 14px; display: block; color: var(--gold); }
 .who small { font-size: 17px; color: var(--muted); display: block; line-height: 1; margin-top: 2px; }
 .progress-row { display: flex; align-items: center; gap: 8px; margin-top: 4px; }

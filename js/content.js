@@ -1,19 +1,19 @@
 // ─────────────────────────────────────────────────────────────────────────────
-//  ARMAAN MUJAWAR — PORTFOLIO CONTENT (OFFICIAL STUDIO ENGINE)
+//  ARAMAN MUJAWAR — PORTFOLIO CONTENT (OFFICIAL STUDIO ENGINE)
 // ─────────────────────────────────────────────────────────────────────────────
 window.CONTENT = {
   profile: {
-    name: 'Armaan Mujawar',
+    name: 'Araman Mujawar',
     role: 'Digital Artist · Creative Developer',
-    greeting: "Hey, I'm Armaan! Digital artist, designer & creative developer. Look around my studio.",
+    greeting: "Hey, I'm Araman! Digital artist, designer & creative developer. Look around my studio.",
   },
 
   about: {
     title: 'About Me', icon: '◆',
     subtitle: 'Digital artist & developer passionate about esports keyart, brand design & code',
     sections: [
-      { type: 'image', src: 'assets/media/profile-armaan.jpg', alt: 'Armaan Mujawar', class: 'portrait' },
-      { type: 'text', body: "Hello! I'm Armaan Mujawar, a passionate digital artist, designer & developer. I thrive on new challenges and am always looking to push my creative boundaries across esports keyart, brand identities, and interactive software." },
+      { type: 'image', src: 'assets/media/profile-armaan.jpg', alt: 'Araman Mujawar', class: 'portrait' },
+      { type: 'text', body: "Hello! I'm Araman Mujawar, a passionate digital artist, designer & developer. I thrive on new challenges and am always looking to push my creative boundaries across esports keyart, brand identities, and interactive software." },
       { type: 'list', title: 'What I Build', items: [
         '📦  DATADUKAN (STARTUP) — AI-driven merchant POS, inventory & voice ledger app built with Flutter & FastAPI.',
         '🔐  VAULTDOC — Zero-knowledge client-side encrypted document vault engineered with AES-256 safeguards.',
@@ -31,7 +31,7 @@ window.CONTENT = {
     sections: [
       { type: 'text', body: "I'm currently available for freelance work and collaborations. Drop me a line through any channel below:" },
       { type: 'links', items: [
-        { label: 'LinkedIn', href: 'https://www.linkedin.com/in/armaan-mujawar-8a33362b9/', note: 'Armaan Mujawar' },
+        { label: 'LinkedIn', href: 'https://www.linkedin.com/in/armaan-mujawar-8a33362b9/', note: 'Araman Mujawar' },
         { label: 'Twitter / X', href: 'https://x.com/Araman245', note: '@Araman245' },
         { label: 'Discord', href: 'https://discordapp.com/users/923904253548978206', note: 'armaan245' },
         { label: 'GitHub', href: 'https://github.com/Armaan245', note: '@Armaan245' },
