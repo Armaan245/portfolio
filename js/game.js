@@ -764,16 +764,16 @@
       c.textAlign = 'center';
       c.fillStyle = '#cbd5e1';
       c.font = `10px ${PIXEL_FONT}`;
-      c.fillText('GOOD', cx, 44);
+      c.fillText('BOLD', cx, 44);
       c.fillStyle = '#f8fafc';
       c.font = `bold 11px ${PIXEL_FONT}`;
-      c.fillText('IDEAS', cx, 56);
+      c.fillText('ART', cx, 56);
       c.fillStyle = '#94a3b8';
       c.font = `9px ${PIXEL_FONT}`;
       c.fillText('BETTER', cx, 68);
       c.fillStyle = '#38bdf8';
       c.font = `bold 9px ${PIXEL_FONT}`;
-      c.fillText('SOFTWARE', cx, 79);
+      c.fillText('CODE', cx, 79);
       c.textAlign = 'left';
     },
 
@@ -1203,7 +1203,7 @@
     },
     fixIdeas(c, o) {
       const [x, y] = boardText(c, o, [12, 60, 62, 15], '', 13);
-      c.textAlign = 'center'; c.fillText('IDEAS', x + 31, y); c.textAlign = 'left';
+      c.textAlign = 'center'; c.fillText('ART', x + 31, y); c.textAlign = 'left';
     },
     screenCode(c, o) {
       screen(c, o, [7, 7, 98, 55], (x, y, w, h) => {
@@ -2271,7 +2271,7 @@
       case 'text': return `${title}<p>${esc(sec.body)}</p>`;
       case 'list': return `${title}<ul class="list">${sec.items.map(i => `<li>${esc(i)}</li>`).join('')}</ul>`;
       case 'tags': return `${title}<div class="tags">${sec.items.map(i => `<span>${esc(i)}</span>`).join('')}</div>`;
-      case 'links': return `${title}<div class="links">${sec.items.map(l => `<a href="${esc(l.href)}" target="_blank" rel="noopener"><b>${esc(l.label)}</b><small>${esc(l.note || '')}</small><i>→</i></a>`).join('')}</div>`;
+      case 'links': return `${title}<div class="links">${sec.items.map(l => `<a href="${esc(l.href)}" target="_blank" rel="noopener"${l.highlight ? ' class="highlight"' : ''}><b>${esc(l.label)}</b><small>${esc(l.note || '')}</small><i>→</i></a>`).join('')}</div>`;
       case 'stats': return `${title}<div class="stats">${sec.items.map(s => `<div><b>${esc(s.value)}</b><small>${esc(s.label)}</small></div>`).join('')}</div>`;
       case 'timeline': return `${title}<ol class="timeline">${sec.items.map(t => `<li><small>${esc(t.when)}</small><b>${esc(t.what)}</b><p>${esc(t.note || '')}</p></li>`).join('')}</ol>`;
       case 'contrib': {
@@ -2300,7 +2300,28 @@
       case 'clock': return `${title}<div class="clock"><small>${esc(sec.label)}</small><b data-tz="${esc(sec.tz)}">--:--</b></div>`;
       case 'spotify': return `${title}${renderSpotifyCard()}`;
       case 'music': return `<button class="pixel-btn music-toggle">${state.music ? '❚❚ Pause music' : '▶ Play studio music'}</button>`;
-      case 'image': return `${title}<figure class="media"><img src="${esc(sec.src)}" alt="${esc(sec.alt || '')}" loading="lazy">${sec.caption ? `<figcaption>${esc(sec.caption)}</figcaption>` : ''}</figure>`;
+      case 'image': {
+        const imgStyles = [];
+        const figStyles = [];
+        if (sec.position) imgStyles.push(`object-position: ${esc(sec.position)}`);
+        if (sec.fit) imgStyles.push(`object-fit: ${esc(sec.fit)}`);
+        if (sec.aspect) {
+          imgStyles.push(`aspect-ratio: ${esc(sec.aspect)}`);
+          figStyles.push(`aspect-ratio: ${esc(sec.aspect)}`);
+        }
+        if (sec.maxHeight) {
+          imgStyles.push(`max-height: ${esc(sec.maxHeight)}`);
+          figStyles.push(`max-height: ${esc(sec.maxHeight)}`);
+        }
+        if (sec.width) {
+          imgStyles.push(`width: ${esc(sec.width)}`);
+          figStyles.push(`width: ${esc(sec.width)}`);
+        }
+        const imgStyleAttr = imgStyles.length ? ` style="${imgStyles.join('; ')}"` : '';
+        const figStyleAttr = figStyles.length ? ` style="${figStyles.join('; ')}"` : '';
+        const figClass = `media${sec.class ? ` ${esc(sec.class)}` : ''}`;
+        return `${title}<figure class="${figClass}"${figStyleAttr}><img src="${esc(sec.src)}" alt="${esc(sec.alt || '')}" loading="lazy"${imgStyleAttr}>${sec.caption ? `<figcaption>${esc(sec.caption)}</figcaption>` : ''}</figure>`;
+      }
       case 'video': return `${title}<figure class="media"><video src="${esc(sec.src)}"${sec.poster ? ` poster="${esc(sec.poster)}"` : ''} autoplay muted loop playsinline preload="metadata"></video>${sec.caption ? `<figcaption>${esc(sec.caption)}</figcaption>` : ''}</figure>`;
       case 'gallery': return `${title}<div class="gallery${sec.tall ? ' tall' : ''}">${sec.items.map(it => {
         const m = /\.(mp4|webm)$/i.test(it.src)

@@ -24,6 +24,9 @@ export default defineConfig({
         copyDir('assets', 'dist/assets');
         copyDir('js', 'dist/js');
         copyDir('css', 'dist/css');
+        if (fs.existsSync('resume.pdf')) {
+          fs.copyFileSync('resume.pdf', 'dist/resume.pdf');
+        }
       },
     },
   ],

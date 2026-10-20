@@ -106,7 +106,7 @@ window.WORLD = {
     { id: 'about', obj: 'board_build', label: 'About me', rect: [174, 106, 88, 92], at: [218, 250], face: 'up', panel: 'about' },
     { id: 'datadukan', obj: 'desk1', label: 'DataDukan', rect: [346, 170, 164, 70], rect2: [294, 230, 269, 120], at: [428, 392], face: 'up', panel: 'datadukan' },
     { id: 'skills', obj: 'shelf1', label: 'Skills & tools', rect: [638, 88, 104, 157], at: [690, 262], face: 'up', panel: 'skills' },
-    { id: 'ideas', obj: 'board_ideas', label: 'Kind words', rect: [754, 106, 85, 92], at: [796, 250], face: 'up', panel: 'ideas' },
+    { id: 'ideas', obj: 'board_ideas', label: 'Philosophy', rect: [754, 106, 85, 92], at: [796, 250], face: 'up', panel: 'ideas' },
     { id: 'vaultdoc', obj: 'desk2', label: 'VaultDoc', rect: [830, 170, 164, 70], rect2: [778, 230, 284, 120], at: [920, 392], face: 'up', panel: 'vaultdoc' },
     { id: 'music', obj: 'np', obj2: 'turntable', label: 'Record player', rect: [1040, 106, 164, 92], rect2: [1086, 186, 107, 112], at: [1138, 322], face: 'up', panel: 'music', action: 'music' },
     { id: 'guitar', obj: 'guitar', label: 'Guitar', rect: [1190, 212, 45, 111], at: [1196, 352], face: 'up', action: 'guitar' },
