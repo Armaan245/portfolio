@@ -117,7 +117,6 @@ window.WORLD = {
     { id: 'github', obj: 'github', label: 'GitHub', rect: [860, 376, 157, 186], at: [938, 586], face: 'up', panel: 'github' },
     { id: 'experience', obj: 'desk3', label: 'Experience', rect: [1022, 352, 206, 132], at: [1126, 566], face: 'up', panel: 'experience' },
     { id: 'reading', obj: 'shelf3', label: 'Design shelf', rect: [1120, 600, 104, 157], at: [1172, 774], face: 'up', panel: 'reading' },
-    { id: 'running', obj: 'bench_l', label: 'Bench · Run log', rect: [172, 712, 106, 70], at: [312, 742], face: 'left', panel: 'running' },
     { id: 'exit', label: 'Say goodbye', rect: [584, 776, 122, 70], at: [645, 770], face: 'down', panel: 'contact' },
   ],
 };

@@ -155,16 +155,6 @@ window.CONTENT = {
     ],
   },
 
-  running: {
-    title: 'Cetaphil Skincare Ad', icon: '🧴',
-    subtitle: 'Brutalist commercial product poster concept',
-    sections: [
-      { type: 'image', src: 'assets/media/CetaphilAD01.png', alt: 'Cetaphil Poster' },
-      { type: 'text', body: 'Brutalist commercial poster concept balancing high-contrast skincare product photography with crisp geometric layouts and modern editorial typography.' },
-      { type: 'tags', items: ['Commercial', 'Poster Design', 'Typography', 'Retouching', 'Brutalism'] },
-    ],
-  },
-
   resume: {
     title: 'RESUME', icon: '📑',
     subtitle: 'The one-page version',
