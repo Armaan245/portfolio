@@ -115,6 +115,13 @@ portfolio/
 
 ---
 
+## 🙏 Acknowledgements & Inspiration
+
+- Original interactive pixel studio concept and room layout inspired by [Dev Chaudhary](https://devchaudhary.com/).
+- Customized, re-engineered, and extended with Japanese studio aesthetics, custom Spider-Man character art, and personal engineering projects by [Araman Mujawar](https://github.com/Armaan245).
+
+---
+
 ## 📄 License
 
 This project is open source and available under the [MIT License](LICENSE).
